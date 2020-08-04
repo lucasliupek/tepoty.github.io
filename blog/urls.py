@@ -1,0 +1,35 @@
+from django.urls import path
+from .views import (
+    PostListView,
+    PostListFollowingView,
+    PostDetailView,
+    PostCreateView,
+    PostUpdateView,
+    PostDeleteView,
+    UserPostListView,
+    FollowsListView,
+    FollowersListView,
+    CreditAquisitionView,
+    PaymentCanceledView,
+    PaymentDoneView,
+    ProcessPaymentView,
+    ContentItemView,
+    TransactionView)
+
+urlpatterns = [
+    path('', PostListView.as_view(), name='blog-home'),
+    path('following-home/', PostListFollowingView.as_view(), name='following-home'),
+    path('post/new/', PostCreateView.as_view(), name='post-create'),
+    path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
+    path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
+    path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
+    path('post/<int:pk>/del/', PostDeleteView.as_view(), name='post-delete'),
+    path('user/<str:username>/follows', FollowsListView.as_view(), name='user-follows'),
+    path('user/<str:username>/followers', FollowersListView.as_view(), name='user-followers'),
+    path('process-payment/', ProcessPaymentView.process_payment, name='process_payment'),
+    path('payment-done/', PaymentDoneView.payment_done, name='payment_done'),
+    path('payment-cancelled/', PaymentCanceledView.payment_canceled, name='payment_cancelled'),
+    path('credit-aquisition/', CreditAquisitionView.credit_aquisition, name='credit_aquisition'),
+    path('buy-content-item/<int:pk>/', ContentItemView.as_view(), name='buy_content_item'),
+    path('post/<int:pk>/buy', TransactionView.as_view(), name='transaction'),
+]

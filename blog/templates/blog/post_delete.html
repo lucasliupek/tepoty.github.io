@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+{% load embed_video_tags %}
+{% block content %}
+    <form method="POST" class="col-6 no-padding">
+        {% csrf_token %}
+        <fieldset class="form-group white-important">
+            Do you really want to delete
+        </fieldset>
+        <p class="bg-steel p-2"
+           style="border: 1px solid white; border-radius: 4px; word-wrap: break-word;">
+           <div>
+                {{ post.content }}
+            </div>
+           {% if post.content_item.yt_video_code %}
+               {% with "https://www.youtube.com/embed/"|add:post.content_item.yt_video_code|add:"?start=0&end=30&showinfo=0&modestbranding=1&disablekb=1" as videourl %}
+                   <div style="padding-top: 10px" >
+                       <iframe src="{{ videourl }}" frameborder=”0″ allowfullscreen></iframe>
+                   </div>
+               {%  endwith %}
+           {%  endif %}
+        </p>
+        <div class="form-group">
+            <button class="btn btn-outline-primary" type="submit">Yes</button>
+        </div>
+    </form>
+{% endblock content %}
